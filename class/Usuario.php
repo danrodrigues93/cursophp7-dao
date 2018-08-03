@@ -47,6 +47,7 @@ class Usuario {
 			":ID"=>$id
 		));
 
+		//NAO ENTENDI
 		if (count($result) > 0){
 
 			$row = $result[0];
@@ -56,8 +57,52 @@ class Usuario {
 			$this->setDessenha($row['dessenha']);
 			$this->setDtcadastro(new DateTime($row['dtcadastro']));
 		}
+		
 
 	}
+
+	public static function getList(){//como nesta funcao nao temos a chamada de nenhum metodo dentro desta classe, optamos por usar static.
+
+		$sql = new Sql();
+		return $sql->select("SELECT * FROM tb_usuarios ORDER BY deslogin");
+
+		}
+
+
+	public static function search($login){
+
+		$sql = new Sql();
+
+		return $sql->select("SELECT * FROM tb_usuarios WHERE deslogin LIKE :SEARCH ORDER BY deslogin", array(
+			':SEARCH'=>"%".$login."%"
+		));
+
+	}
+
+	public function login($login, $password){
+
+		$sql = new Sql();
+		$result = $sql->select("SELECT * FROM tb_usuarios WHERE deslogin = :LOGIN AND dessenha = :PASSWORD", array(
+			":LOGIN"=>$login,
+			":PASSWORD"=>$password
+		));
+
+		//NAO ENTENDI
+		if (count($result) > 0){
+
+			$row = $result[0];
+
+			$this->setIdusuario($row['idusuario']);
+			$this->setDeslogin($row['deslogin']);
+			$this->setDessenha($row['dessenha']);
+			$this->setDtcadastro(new DateTime($row['dtcadastro']));
+		} else{
+
+			throw new Exception("Erro, nada encontrado", 1);
+
+		}		
+	}
+	
 
 	public function __toString(){
 
