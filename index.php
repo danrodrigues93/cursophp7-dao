@@ -4,11 +4,24 @@ require_once("config.php");
 
 $usuario = new Usuario();
 
+$usuario->loadbyId(3);
+
+$usuario->delete();
+
+echo $usuario;
+
+
+
+/*//Update
+$usuario = new Usuario();
+
 $usuario->loadbyId(4);
 
 $usuario->update("professor", "@123");
 
 echo $usuario;
+*/
+
 /*//Criando um novo usuario
 $aluno = new Usuario("aluno", "4lun0");
 
